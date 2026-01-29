@@ -92,12 +92,16 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controller\SzolgaltatasController.cs" />
+    <Compile Include="Controller\SzolgaltatoController.cs" />
     <Compile Include="Models\Szamla.cs" />
     <Compile Include="Models\Szolgaltatas.cs" />
     <Compile Include="Models\Szolgaltato.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Views\SzolgaltatasView.cs" />
     <Compile Include="Views\SzolgaltatoView.cs" />
+    <Compile Include="Views\Text.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using KockasFuzet.Controller;
 using KockasFuzet.Models;
 using KockasFuzet.Views;
 
@@ -12,71 +13,78 @@ namespace KockasFuzet
     {
         static void Main(string[] args)
         {
-            string[] menupoints = { "Szolgáltatók kiirása", "Szolgáltató kiirása", "Kilépés" };
-            List<Szolgaltato> szolgaltatok = new List<Szolgaltato>()
-            {
-                new Szolgaltato("T-Home", "Magyar Telekom Nyrt.", "1117 Budapest, Magyar Tudósok körútja 9-11."),
-                new Szolgaltato("Vodafone", "Vodafone Magyarország Zrt.", "1095 Budapest, Lechner Ödön fasor 6."),
-                new Szolgaltato("Telenor", "Telenor Magyarország Zrt.", "2045 Törökbálint, Törökbálinti út 1-3.")
-            };
-            bool valasztas = false;
-            int mostanipont = 0;
+            string[] menupoints = { "Szolgáltató kezelés", "Szolgáltatás kezelés", "Kilépés" };
+
             while (true)
             {
-                Console.Clear();
-                Console.WriteLine("Főmenü");
-                Console.WriteLine("=========");
-
-                for(int i = 0; i < menupoints.Length; i++)
+                List<Szolgaltato> szolgaltatok = SzolgaltatoController.GetSzolgaltatoList();
+                List<Szolgaltatas> szolgaltatasok = SzolgaltatasController.GetSzolgaltatasList();
+                int fomenuchoice = Text.ArrowMenu("Főmenü", menupoints);
+                switch (fomenuchoice)
                 {
-                    if (i == mostanipont)
-                    {
-                        Console.WriteLine($"> {menupoints[i]}");
-                    }
-                    else
-                    {
-                        Console.WriteLine($"{menupoints[i]}");
-                    }
-                }
-                switch(Console.ReadKey(true).Key)
-                {
-                    case ConsoleKey.E:
-                        valasztas = true;
+                    case 0:
+                        Console.Clear();
+                        int szolgaltatochoice = Text.ArrowMenu("Szolgáltató kezelés", new string[] { "Szolgáltatók listázása","Szolgáltató kiirása", "Szolgáltató hozzáadása", "Szolgáltató módosítása", "Szolgáltató törlése", "Vissza" });
+                        switch(szolgaltatochoice)
+                        {
+                            case 0:
+                                Console.Clear();
+                                SzolgaltatoView.ShowSzolgaltatoList(szolgaltatok);
+                                Console.ReadLine();
+                                break;
+                            case 1:
+                                Console.Clear();
+                                Text.WriteLine("Szolgáltató keresés", ConsoleColor.Red);
+                                Text.WriteLine("=====================",ConsoleColor.DarkYellow);
+                                Console.WriteLine("Add meg a szolgáltató rövidnevét:");
+                                Szolgaltato kivalasztott = SzolgaltatoController.GetSzolgaltatoOBJ(Console.ReadLine(),szolgaltatok);
+                                if (kivalasztott != null)
+                                {
+                                    new SzolgaltatoView().ShowSzolgaltato(kivalasztott);
+                                }
+                                else
+                                {
+                                    Text.WriteLine("Nincs ilyen szolgáltató!", ConsoleColor.Yellow);
+                                }
+                                Console.ReadLine();
+                                break;
+                            case 2:
+                                break;
+                            case 3:
+                                break;
+                            case 4:
+                                break;
+                            case 5:
+                                break;
+                        }
                         break;
-                    case ConsoleKey.W:
-                        if (mostanipont > 0) mostanipont--;
+                    case 1:
+                        Console.Clear();
+                        int szolgaltataschoice = Text.ArrowMenu("Szolgáltatás kezelés", new string[] { "Szolgáltatások listázása", "Szolgáltatás kiirása", "Szolgáltatás hozzáadása", "Szolgáltatás módosítása", "Szolgáltatás törlése", "Vissza" });
+                        switch (szolgaltataschoice)
+                        {
+                            case 0:
+                                Console.Clear();
+                                SzolgaltatasView.ShowSzolgaltatasList(szolgaltatasok);
+                                Console.ReadLine();
+                                break;
+                            case 1:
+                                break;
+                            case 2:
+                                break;
+                            case 3:
+                                break;
+                            case 4:
+                                break;
+                            case 5:
+                                break;
+                        }
                         break;
-                    case ConsoleKey.S:  
-                        if (mostanipont < menupoints.Length - 1) mostanipont++;
+                    case 2:
+                        Environment.Exit(0);
                         break;
-                    default:
-                        Console.Beep();
-                        break;
-                }
-                if (valasztas)
-                {
-                    switch(mostanipont)
-                    {
-                        case 0:
-                            Console.Clear();
-                            SzolgaltatoView.ShowSzolgaltatoList(szolgaltatok);
-                            Console.ReadLine();
-                            valasztas = false;
-                            break;
-                        case 1:
-                            Console.Clear();
-                            new SzolgaltatoView().ShowSzolgaltato(new Szolgaltato("T-Home", "Magyar Telekom Nyrt.", "1117 Budapest, Magyar Tudósok körútja 9-11."));
-                            Console.ReadLine();
-                            valasztas = false;
-                            break;
-                        case 2:
-                            Environment.Exit(0);
-                            break;
-                    }
                 }
             }
-            SzolgaltatoView.ShowSzolgaltatoList(new List<Szolgaltato>());
-            new SzolgaltatoView().ShowSzolgaltato(new Szolgaltato("T-Home", "Magyar Telekom Nyrt.", "1117 Budapest, Magyar Tudósok körútja 9-11."));
         }
     }
 }

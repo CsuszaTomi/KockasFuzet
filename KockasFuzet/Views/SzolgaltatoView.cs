@@ -24,16 +24,18 @@ namespace KockasFuzet.Views
 
         static public void ShowSzolgaltatoList(List<Szolgaltato> szolgaltatoList)
         {
-            //120x30 a méret
-            Console.WriteLine("╔═════════╦════════════════════════════════════════╦══════════════════════════════════════════════════════════╗");
-            Console.WriteLine("║ Rövinév ║                Név                     ║                   Ügyfélszolgálat                        ║");
-            Console.WriteLine("║         ║                                        ║         Cím                 ║           Telefon          ║");
-            Console.WriteLine("╠═════════╬════════════════════════════════════════╬══════════════════════════════════════════════════════════╣");
+            Console.WriteLine("╔═════════╦════════════════════════════════════════════╦══════════════════════════════════════════════════════════╗");
+            Console.WriteLine("║ Rövinév ║                    Név                     ║                   Ügyfélszolgálat                        ║");
+            Console.WriteLine("║         ║                                            ║                        Cím                               ║");
+            Console.WriteLine("╠═════════╬════════════════════════════════════════════╬══════════════════════════════════════════════════════════╣");
             foreach (Szolgaltato szolgaltato in szolgaltatoList)
             {
-                Console.WriteLine($"║ {szolgaltato.RovidNev,-7} ║ {szolgaltato.Nev,-38} ║ {szolgaltato.UgyfelSzolgalat,-56} ║");
-            }   
-            Console.WriteLine("╚═════════╩════════════════════════════════════════╩═══════════════════════════════════════════════════════════╝");
+                string rovid = szolgaltato.RovidNev.PadRight(7).Substring(0, 7);
+                string nev = szolgaltato.Nev.PadRight(42).Substring(0, 42);
+                string ugyfel = szolgaltato.UgyfelSzolgalat.PadRight(56).Substring(0, 56);
+                Console.WriteLine($"║ {rovid} ║ {nev} ║ {ugyfel} ║");
+            }
+            Console.WriteLine("╚═════════╩════════════════════════════════════════════╩══════════════════════════════════════════════════════════╝");
         }
     }
 }
