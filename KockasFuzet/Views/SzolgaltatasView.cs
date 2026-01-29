@@ -21,6 +21,8 @@ namespace KockasFuzet.Views
 
         static public void ShowSzolgaltatasList(List<Szolgaltatas> szolgaltatasList)
         {
+            Text.WriteLine("Szolgáltatások",ConsoleColor.Red);
+            Text.WriteLine("===================", ConsoleColor.DarkYellow);
             Console.WriteLine("╔════╦══════════════════════╗");
             Console.WriteLine("║Azon║          Név         ║");
             Console.WriteLine("╠════╬══════════════════════╣");
@@ -31,6 +33,7 @@ namespace KockasFuzet.Views
                 Console.WriteLine($"║ {id} ║ {nev} ║");
             }
             Console.WriteLine("╚════╩══════════════════════╝");
+            Text.WriteLine("Enterrel vissza....", ConsoleColor.Yellow);
         }
     }
 }

@@ -13,12 +13,13 @@ namespace KockasFuzet
     {
         static void Main(string[] args)
         {
-            string[] menupoints = { "Szolgáltató kezelés", "Szolgáltatás kezelés", "Kilépés" };
+            string[] menupoints = { "Szolgáltató kezelés", "Szolgáltatás kezelés","Számla kezelés", "Kilépés" };
 
             while (true)
             {
                 List<Szolgaltato> szolgaltatok = SzolgaltatoController.GetSzolgaltatoList();
                 List<Szolgaltatas> szolgaltatasok = SzolgaltatasController.GetSzolgaltatasList();
+                List<Szamla> szamlak = SzamlaController.GetSzamlaList();
                 int fomenuchoice = Text.ArrowMenu("Főmenü", menupoints);
                 switch (fomenuchoice)
                 {
@@ -69,6 +70,20 @@ namespace KockasFuzet
                                 Console.ReadLine();
                                 break;
                             case 1:
+                                Console.Clear();
+                                Text.WriteLine("Szolgáltatás keresés", ConsoleColor.Red);
+                                Text.WriteLine("=====================", ConsoleColor.DarkYellow);
+                                Console.Write("Add meg a szolgáltatás azonosítóját:");
+                                Szolgaltatas kivalasztott = SzolgaltatasController.GetSzolgaltatasOBJ(Convert.ToInt32(Console.ReadLine()), szolgaltatasok);
+                                if (kivalasztott != null)
+                                {
+                                    new SzolgaltatasView().ShowSzolgaltatas(kivalasztott);
+                                }
+                                else
+                                {
+                                    Text.WriteLine("Nincs ilyen szolgáltatás!", ConsoleColor.Yellow);
+                                }
+                                Console.ReadLine();
                                 break;
                             case 2:
                                 break;
@@ -81,6 +96,42 @@ namespace KockasFuzet
                         }
                         break;
                     case 2:
+                        Console.Clear();
+                        int szamlachoice = Text.ArrowMenu("Számla kezelés", new string[] { "Számlák listázása", "Számla kiirása", "Számla hozzáadása", "Számla módosítása", "Számla törlése", "Vissza" });
+                        switch (szamlachoice)
+                        {
+                            case 0:
+                                Console.Clear();
+                                SzamlaView.ShowSzamlaList(szamlak);
+                                Console.ReadLine();
+                                break;
+                            case 1:
+                                Console.Clear();
+                                Text.WriteLine("Számla keresés", ConsoleColor.Red);
+                                Text.WriteLine("=====================", ConsoleColor.DarkYellow);
+                                Console.Write("Add meg a számla azonosítóját:");
+                                Szamla kivalasztott = SzamlaController.GetSzamlaOBJ(Convert.ToInt32(Console.ReadLine()), szamlak);
+                                if (kivalasztott != null)
+                                {
+                                    new SzamlaView().ShowSzamla(kivalasztott);
+                                }
+                                else
+                                {
+                                    Text.WriteLine("Nincs ilyen számla!", ConsoleColor.Yellow);
+                                }
+                                Console.ReadLine();
+                                break;
+                            case 2:
+                                break;
+                            case 3:
+                                break;
+                            case 4:
+                                break;
+                            case 5:
+                                break;
+                        }
+                        break;
+                    case 3:
                         Environment.Exit(0);
                         break;
                 }
