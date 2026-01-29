@@ -67,9 +67,10 @@ namespace KockasFuzet.Controller
             MySqlCommand command = new MySqlCommand(sql, connection);
             command.Parameters.AddWithValue("@azon", azonosito);
             command.Parameters.AddWithValue("@nev", nev);
-            command.ExecuteNonQuery();
+            int sorok = command.ExecuteNonQuery();
             connection.Close();
-            Text.WriteLine("Szolgáltatás sikeresen hozzáadva!", ConsoleColor.Green);
+            string valasz = sorok > 0 ? "Sikeres hozzáadás!" : "Sikertelen hozzáadás!";
+            Text.WriteLine(valasz, ConsoleColor.Cyan);
             Text.WriteLine("Enterrel vissza...", ConsoleColor.Yellow);
             Console.ReadLine();
         }
@@ -95,9 +96,10 @@ namespace KockasFuzet.Controller
                     string deletesql = $"DELETE FROM `szolgaltatas` WHERE Azon = @azon";
                     MySqlCommand deletecmd = new MySqlCommand(deletesql, connection);
                     deletecmd.Parameters.AddWithValue("@azon", azon);
-                    deletecmd.ExecuteNonQuery();
+                    int sorok = deletecmd.ExecuteNonQuery();
                     connection.Close();
-                    Text.WriteLine("Sikeres törlés!", ConsoleColor.Green);
+                    string valasz = sorok > 0 ? "Sikeres törlés!" : "Sikertelen törlés!";
+                    Text.WriteLine(valasz, ConsoleColor.Cyan);
                 }
                 else
                 {
@@ -163,9 +165,10 @@ namespace KockasFuzet.Controller
                     deletecmd.Parameters.AddWithValue("@nev", ujnev);
                 else
                     deletecmd.Parameters.AddWithValue("@nev", modositando.Nev);
-                deletecmd.ExecuteNonQuery();
+                int sorok = deletecmd.ExecuteNonQuery();
                 connection.Close();
-                Text.WriteLine("Sikeres módosítás!", ConsoleColor.Green);
+                string valasz = sorok > 0 ? "Sikeres módosítás!":"Sikertelen módosítás!";
+                Text.WriteLine(valasz, ConsoleColor.Cyan);
             }
             Text.WriteLine("Enterrel vissza...", ConsoleColor.Yellow);
             Console.ReadLine();
