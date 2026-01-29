@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using KockasFuzet.Models;
 using MySql.Data.MySqlClient;
+using KockasFuzet.Views;
 
 namespace KockasFuzet.Controller
 {
@@ -43,6 +44,131 @@ namespace KockasFuzet.Controller
                 }
             }
             return null;
+        }
+
+        static public void AddSzolgaltatas()
+        {
+            Console.Clear();
+            Text.WriteLine("Új szolgáltatás hozzáadása", ConsoleColor.Red);
+            Text.WriteLine("=========================", ConsoleColor.DarkYellow);
+            Console.Write("Azonosító: ");
+            string azonosito = Console.ReadLine();
+            if (azonosito == "")
+                return;
+            Console.Write("Név: ");
+            string nev = Console.ReadLine();
+            if (nev == "")
+                return;
+            MySqlConnection connection = new MySqlConnection();
+            string connectionString = "SERVER = localhost;DATABASE=kockasfuzet;UID=root;PASSWORD=;";
+            connection.ConnectionString = connectionString;
+            connection.Open();
+            string sql = "INSERT INTO szolgaltatas (Azon, Nev) VALUES (@azon, @nev);";
+            MySqlCommand command = new MySqlCommand(sql, connection);
+            command.Parameters.AddWithValue("@azon", azonosito);
+            command.Parameters.AddWithValue("@nev", nev);
+            command.ExecuteNonQuery();
+            connection.Close();
+            Text.WriteLine("Szolgáltatás sikeresen hozzáadva!", ConsoleColor.Green);
+            Text.WriteLine("Enterrel vissza...", ConsoleColor.Yellow);
+            Console.ReadLine();
+        }
+
+        static public void RemoveSzolgaltatas(List<Szolgaltatas> szolgaltatasok)
+        {
+            Console.Clear();
+            Text.WriteLine("Szolgáltatás törlés", ConsoleColor.Red);
+            Text.WriteLine("=========================", ConsoleColor.DarkYellow);
+            Console.Write("Add meg a törlendő szolgáltatás azonosítóját: ");
+            string azon = Console.ReadLine();
+            if (azon == "")
+                return;
+            int szamlalo = 0;
+            foreach (Szolgaltatas szolgaltatas in szolgaltatasok)
+            {
+                if (szolgaltatas.Azon == int.Parse(azon))
+                {
+                    MySqlConnection connection = new MySqlConnection();
+                    string connectionString = "SERVER = localhost;DATABASE=kockasfuzet;UID=root;PASSWORD=;";
+                    connection.ConnectionString = connectionString;
+                    connection.Open();
+                    string deletesql = $"DELETE FROM `szolgaltatas` WHERE Azon = @azon";
+                    MySqlCommand deletecmd = new MySqlCommand(deletesql, connection);
+                    deletecmd.Parameters.AddWithValue("@azon", azon);
+                    deletecmd.ExecuteNonQuery();
+                    connection.Close();
+                    Text.WriteLine("Sikeres törlés!", ConsoleColor.Green);
+                }
+                else
+                {
+                    szamlalo++;
+                    if (szamlalo == szolgaltatasok.Count)
+                    {
+                        Text.WriteLine("Nincs ilyen szolgáltató!", ConsoleColor.DarkRed);
+                    }
+                }
+            }
+            Text.WriteLine("Enterrel vissza...", ConsoleColor.Yellow);
+            Console.ReadLine();
+        }
+
+        static public void ModifySzolgaltatas(List<Szolgaltatas> szolgaltatasok)
+        {
+            Console.Clear();
+            Text.WriteLine("Szolgáltatás módosítás", ConsoleColor.Red);
+            Text.WriteLine("=========================", ConsoleColor.DarkYellow);
+            Console.Write("Add meg a módosítandó szolgáltatás azonosítóját: ");
+            string azon = Console.ReadLine();
+            if (azon == "")
+                return;
+            int szamlalo = 0;
+            bool modosit = false;
+            Szolgaltatas modositando = new Szolgaltatas();
+            foreach (Szolgaltatas szolgaltatas in szolgaltatasok)
+            {
+                if (szolgaltatas.Azon == int.Parse(azon))
+                {
+                    modosit = true;
+                    modositando = szolgaltatas;
+                    break;
+                }
+                else
+                {
+                    szamlalo++;
+                    if (szamlalo == szolgaltatasok.Count)
+                    {
+                        Text.WriteLine("Nincs ilyen szolgáltató!", ConsoleColor.DarkRed);
+                    }
+                }
+            }
+            if (modosit)
+            {
+                Text.WriteLine("Ha valamit nem akar módosítani nyomjon entert!", ConsoleColor.Yellow);
+                Console.WriteLine($"Azonosító({modositando.Azon}): ");
+                string ujazon = Console.ReadLine();
+                Console.Write($"Név ({modositando.Nev}): ");
+                string ujnev = Console.ReadLine();
+                MySqlConnection connection = new MySqlConnection();
+                string connectionString = "SERVER = localhost;DATABASE=kockasfuzet;UID=root;PASSWORD=;";
+                connection.ConnectionString = connectionString;
+                connection.Open();
+                string deletesql = $"UPDATE `szolgaltatas` SET `Azon`=@azon,`Nev`=@nev WHERE Azon = @originalAzon";
+                MySqlCommand deletecmd = new MySqlCommand(deletesql, connection);
+                deletecmd.Parameters.AddWithValue("@originalAzon", modositando.Azon);
+                if (ujazon != "")
+                    deletecmd.Parameters.AddWithValue("@azon", ujazon);
+                else
+                    deletecmd.Parameters.AddWithValue("@azon", modositando.Azon);
+                if (ujnev != "")
+                    deletecmd.Parameters.AddWithValue("@nev", ujnev);
+                else
+                    deletecmd.Parameters.AddWithValue("@nev", modositando.Nev);
+                deletecmd.ExecuteNonQuery();
+                connection.Close();
+                Text.WriteLine("Sikeres módosítás!", ConsoleColor.Green);
+            }
+            Text.WriteLine("Enterrel vissza...", ConsoleColor.Yellow);
+            Console.ReadLine();
         }
     }
 }

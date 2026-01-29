@@ -92,10 +92,16 @@ namespace KockasFuzet
                                 Console.ReadLine();
                                 break;
                             case 2:
+                                Console.Clear();
+                                SzolgaltatasController.AddSzolgaltatas();
                                 break;
                             case 3:
+                                Console.Clear();
+                                SzolgaltatasController.ModifySzolgaltatas(szolgaltatasok);
                                 break;
                             case 4:
+                                Console.Clear();
+                                SzolgaltatasController.RemoveSzolgaltatas(szolgaltatasok);
                                 break;
                             case 5:
                                 break;
