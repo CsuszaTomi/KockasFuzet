@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Gép: 127.0.0.1
--- Létrehozás ideje: 2026. Jan 22. 13:32
+-- Létrehozás ideje: 2026. Jan 29. 08:13
 -- Kiszolgáló verziója: 10.4.32-MariaDB
 -- PHP verzió: 8.2.12
 
@@ -20,6 +20,8 @@ SET time_zone = "+00:00";
 --
 -- Adatbázis: `kockasfuzet`
 --
+CREATE DATABASE IF NOT EXISTS `kockasfuzet` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_hungarian_ci;
+USE `kockasfuzet`;
 
 -- --------------------------------------------------------
 
@@ -27,6 +29,7 @@ SET time_zone = "+00:00";
 -- Tábla szerkezet ehhez a táblához `szolgaltatas`
 --
 
+DROP TABLE IF EXISTS `szolgaltatas`;
 CREATE TABLE `szolgaltatas` (
   `Azon` int(11) NOT NULL,
   `Nev` varchar(32) NOT NULL
@@ -38,11 +41,22 @@ CREATE TABLE `szolgaltatas` (
 -- Tábla szerkezet ehhez a táblához `szolgaltato`
 --
 
+DROP TABLE IF EXISTS `szolgaltato`;
 CREATE TABLE `szolgaltato` (
   `RovidNev` varchar(32) NOT NULL,
   `Nev` varchar(256) NOT NULL,
   `UgyfelSzolgalat` varchar(256) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_hungarian_ci;
+
+--
+-- A tábla adatainak kiíratása `szolgaltato`
+--
+
+INSERT INTO `szolgaltato` (`RovidNev`, `Nev`, `UgyfelSzolgalat`) VALUES
+('ÉRV', 'Északmagyarországi Regionális Vízművek Zrt.', '3530 Miskolc, Corvin u. 2.'),
+('MiVíz', 'MIVÍZ Kft.', '3530 Miskolc, Corvin u. 2.'),
+('MVM Next', 'MVM Next Energiakereskedelmi Zrt', '3530 Miskolc, Arany János utca 6-8.'),
+('Telecom', 'Magyar Telekom Nyrt.', '3525 Miskolc, Szentpáli utca 2 - 6.');
 
 -- --------------------------------------------------------
 
@@ -50,6 +64,7 @@ CREATE TABLE `szolgaltato` (
 -- Tábla szerkezet ehhez a táblához `számla`
 --
 
+DROP TABLE IF EXISTS `számla`;
 CREATE TABLE `számla` (
   `ID` int(11) NOT NULL,
   `SzolgaltatasAzon` int(11) NOT NULL,
