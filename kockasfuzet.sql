@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Gép: 127.0.0.1
--- Létrehozás ideje: 2026. Jan 29. 09:39
+-- Létrehozás ideje: 2026. Jan 29. 13:11
 -- Kiszolgáló verziója: 10.4.32-MariaDB
 -- PHP verzió: 8.2.12
 
@@ -35,6 +35,17 @@ CREATE TABLE `szolgaltatas` (
   `Nev` varchar(32) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_hungarian_ci;
 
+--
+-- A tábla adatainak kiíratása `szolgaltatas`
+--
+
+INSERT INTO `szolgaltatas` (`Azon`, `Nev`) VALUES
+(1, 'Áram'),
+(2, 'Földgáz'),
+(3, 'Vezetékes Telefon'),
+(4, 'Mobil'),
+(5, 'Víz');
+
 -- --------------------------------------------------------
 
 --
@@ -53,6 +64,7 @@ CREATE TABLE `szolgaltato` (
 --
 
 INSERT INTO `szolgaltato` (`RovidNev`, `Nev`, `UgyfelSzolgalat`) VALUES
+('Bilibali', 'Bilibali Olajvállalat', '5151252'),
 ('ÉRV', 'Északmagyarországi Regionális Vízművek Zrt.', '3530 Miskolc, Corvin u. 2.'),
 ('MiVíz', 'MIVÍZ Kft.', '3530 Miskolc, Corvin u. 2.'),
 ('MVM Next', 'MVM Next Energiakereskedelmi Zrt', '3530 Miskolc, Arany János utca 6-8.'),
@@ -76,6 +88,13 @@ CREATE TABLE `számla` (
   `Befizetve` date DEFAULT NULL,
   `Megjegyzes` varchar(256) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_hungarian_ci;
+
+--
+-- A tábla adatainak kiíratása `számla`
+--
+
+INSERT INTO `számla` (`ID`, `SzolgaltatasAzon`, `SzolgaltatoRovid`, `Tol`, `Ig`, `Osszeg`, `Hatarido`, `Befizetve`, `Megjegyzes`) VALUES
+(1, 1, 'MVM Next', '2025-11-01', '2025-11-30', 9525, '2025-12-14', '2025-12-05', 'postán');
 
 --
 -- Indexek a kiírt táblákhoz
@@ -109,13 +128,13 @@ ALTER TABLE `számla`
 -- AUTO_INCREMENT a táblához `szolgaltatas`
 --
 ALTER TABLE `szolgaltatas`
-  MODIFY `Azon` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `Azon` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT a táblához `számla`
 --
 ALTER TABLE `számla`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- Megkötések a kiírt táblákhoz
