@@ -28,5 +28,10 @@ namespace KockasFuzet.Models
         public string RovidNev { get => rovidNev; set => rovidNev = value; }
         public string Nev { get => nev; set => nev = value; }
         public string UgyfelSzolgalat { get => ugyfelSzolgalat; set => ugyfelSzolgalat = value; }
+
+        public override string ToString()
+        {
+            return $"RövidNév: {RovidNev},Név: {Nev},Ügyfélszolgálat: {UgyfelSzolgalat}";
+        }
     }
 }

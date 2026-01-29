@@ -23,5 +23,10 @@ namespace KockasFuzet.Models
         }
         public int Azon { get => azon; set => azon = value; }
         public string Nev { get => nev; set => nev = value; }
+
+        public override string ToString()
+        {
+            return $"Azon: {Azon},Név: {Nev}";
+        }
     }
 }
