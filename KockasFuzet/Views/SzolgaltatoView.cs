@@ -26,18 +26,18 @@ namespace KockasFuzet.Views
         {
             Text.WriteLine("Szolgáltatók", ConsoleColor.Red);
             Text.WriteLine("===================", ConsoleColor.DarkYellow);
-            Console.WriteLine("╔═════════╦════════════════════════════════════════════╦══════════════════════════════════════════════════════════╗");
-            Console.WriteLine("║ Rövinév ║                    Név                     ║                   Ügyfélszolgálat                        ║");
-            Console.WriteLine("║         ║                                            ║                        Cím                               ║");
-            Console.WriteLine("╠═════════╬════════════════════════════════════════════╬══════════════════════════════════════════════════════════╣");
+            Console.WriteLine("╔══════════╦════════════════════════════════════════════╦══════════════════════════════════════════════════════════╗");
+            Console.WriteLine("║ Rövidnév ║                    Név                     ║                   Ügyfélszolgálat                        ║");
+            Console.WriteLine("║          ║                                            ║                        Cím                               ║");
+            Console.WriteLine("╠══════════╬════════════════════════════════════════════╬══════════════════════════════════════════════════════════╣");
             foreach (Szolgaltato szolgaltato in szolgaltatoList)
             {
-                string rovid = szolgaltato.RovidNev.PadRight(7).Substring(0, 7);
+                string rovid = szolgaltato.RovidNev.PadRight(8).Substring(0, 8);
                 string nev = szolgaltato.Nev.PadRight(42).Substring(0, 42);
                 string ugyfel = szolgaltato.UgyfelSzolgalat.PadRight(56).Substring(0, 56);
                 Console.WriteLine($"║ {rovid} ║ {nev} ║ {ugyfel} ║");
             }
-            Console.WriteLine("╚═════════╩════════════════════════════════════════════╩══════════════════════════════════════════════════════════╝");
+            Console.WriteLine("╚══════════╩════════════════════════════════════════════╩══════════════════════════════════════════════════════════╝");
             Text.WriteLine("Enterrel vissza....", ConsoleColor.Yellow);
         }
     }

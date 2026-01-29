@@ -50,10 +50,16 @@ namespace KockasFuzet
                                 Console.ReadLine();
                                 break;
                             case 2:
+                                Console.Clear();
+                                SzolgaltatoController.AddSzolgaltato();
                                 break;
                             case 3:
+                                Console.Clear();
+                                SzolgaltatoController.ModifySzolgaltato(szolgaltatok);
                                 break;
                             case 4:
+                                Console.Clear();
+                                SzolgaltatoController.RemoveSzolgaltato(szolgaltatok);
                                 break;
                             case 5:
                                 break;
