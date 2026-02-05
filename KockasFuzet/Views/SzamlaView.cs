@@ -13,17 +13,52 @@ namespace KockasFuzet.Views
         {
         }
 
-        public void ShowSzamla(Szamla szamla)
+        public void ShowSzamla(Szamla szamla,List<Szolgaltatas> szolgaltatasok)
         {
-            Console.WriteLine($"ID: {szamla.ID}");
-            Console.WriteLine($"Szolgáltatás azonosító: {szamla.SzolgaltatasAzon}");
-            Console.WriteLine($"Szolgáltatás rövid neve: {szamla.SzolgaltatoRovidNev}");
-            Console.WriteLine($"Tol: {szamla.Tol.ToShortDateString()}");
-            Console.WriteLine($"Ig: {szamla.Ig.ToShortDateString()}");
-            Console.WriteLine($"Összeg: {szamla.Osszeg} Ft");
-            Console.WriteLine($"Határidő: {szamla.Hatarido.ToShortDateString()}");
-            Console.WriteLine($"Befizetve: {(szamla.Befizetve == null ? "Nincs befizetve" : szamla.Befizetve)}");
-            Console.WriteLine($"Megjegyzés: {szamla.Megjegyzes}");
+            Console.WriteLine();
+            Text.Write("  #", ConsoleColor.DarkYellow);
+            Text.Write(szamla.ID.ToString(), ConsoleColor.Yellow);
+            Text.WriteLine(" SZÁMLA RÉSZLETEI", ConsoleColor.White);
+            Text.WriteLine("-----------------------------------", ConsoleColor.DarkGray);
+            Text.Write("  Kiadó:      ", ConsoleColor.Gray);
+            Text.Write(szamla.SzolgaltatoRovidNev, ConsoleColor.Cyan);
+            Console.WriteLine();
+            Text.Write("  Szolgáltatás:  ", ConsoleColor.Gray);
+            foreach (Szolgaltatas szolgaltatas in szolgaltatasok)
+            {
+                if(szolgaltatas.Azon == szamla.SzolgaltatasAzon)
+                {
+                    Text.Write(szolgaltatas.Nev, ConsoleColor.DarkCyan);
+                    break;
+                }
+            };
+            Console.WriteLine();
+
+            Text.Write("  Időszak:    ", ConsoleColor.Gray);
+            Text.Write(szamla.Tol.ToString("yyyy-MM-dd"), ConsoleColor.White);
+            Text.Write(" >>> ", ConsoleColor.DarkGray);
+            Text.WriteLine(szamla.Ig.ToString("yyyy-MM-dd"), ConsoleColor.White);
+
+            Text.Write("  Összeg:     ", ConsoleColor.Gray);
+            Text.WriteLine($"{szamla.Osszeg} Ft", ConsoleColor.Green);
+
+            Text.Write("  Határidő:   ", ConsoleColor.Gray);
+            Text.WriteLine(szamla.Hatarido.ToString("yyyy-MM-dd"), ConsoleColor.Red);
+
+            Text.Write("  Állapot:   ", ConsoleColor.Gray);
+            if (szamla.Befizetve == "Nincs befizetve" || string.IsNullOrEmpty(szamla.Befizetve))
+            {
+                Text.WriteLine(" [FÜGGŐBEN]", ConsoleColor.Magenta);
+            }
+            else
+            {
+                Text.Write(" [KIFIZETVE] ", ConsoleColor.Green);
+                Text.WriteLine($"({szamla.Befizetve})", ConsoleColor.DarkGreen);
+            }
+            Text.WriteLine("-----------------------------------", ConsoleColor.DarkGray);
+            Text.Write("  Megjegyzés: ", ConsoleColor.DarkYellow);
+            Console.WriteLine(szamla.Megjegyzes);
+            Text.WriteLine("-----------------------------------", ConsoleColor.DarkGray);
         }
 
         static public void ShowSzamlaList(List<Szamla> szamlaList)

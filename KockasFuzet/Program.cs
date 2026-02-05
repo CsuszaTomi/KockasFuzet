@@ -122,10 +122,22 @@ namespace KockasFuzet
                                 Text.WriteLine("Számla keresés", ConsoleColor.Red);
                                 Text.WriteLine("=====================", ConsoleColor.DarkYellow);
                                 Console.Write("Add meg a számla azonosítóját:");
-                                Szamla kivalasztott = SzamlaController.GetSzamlaOBJ(Convert.ToInt32(Console.ReadLine()), szamlak);
+                                string azonosito = Console.ReadLine();
+                                if(azonosito == "")
+                                    break;
+                                else
+                                {
+                                    while (!Checker.IntChecker(azonosito))
+                                    {
+                                        Text.WriteLine("Az azonosító csak szám lehet!",ConsoleColor.DarkRed);
+                                        Console.Write("Add meg a számla azonosítóját:");
+                                        azonosito = Console.ReadLine();
+                                    }
+                                }
+                                Szamla kivalasztott = SzamlaController.GetSzamlaOBJ(Convert.ToInt32(azonosito), szamlak);
                                 if (kivalasztott != null)
                                 {
-                                    new SzamlaView().ShowSzamla(kivalasztott);
+                                    new SzamlaView().ShowSzamla(kivalasztott,szolgaltatasok);
                                 }
                                 else
                                 {

@@ -15,11 +15,20 @@ namespace KockasFuzet.Views
 
         public void ShowSzolgaltato(Szolgaltato szolgaltato)
         {
-            Console.WriteLine($"Rövidnév: {szolgaltato.RovidNev}");
-            Console.WriteLine($"Név: {szolgaltato.Nev}");
-            Console.WriteLine($"Ügyfélszolgálat");
-            Console.WriteLine($"Cím: {szolgaltato.UgyfelSzolgalat}");
-            Console.WriteLine($"Telefon: Nincs");
+            Text.Write("  #", ConsoleColor.DarkYellow);
+            Text.Write(szolgaltato.RovidNev.ToString(), ConsoleColor.Yellow);
+            Text.WriteLine(" SZOLGÁLTATÓ RÉSZLETEI", ConsoleColor.White);
+            Text.WriteLine("-----------------------------------", ConsoleColor.DarkGray);
+            Text.Write("  Név:      ", ConsoleColor.Gray);
+            Text.Write(szolgaltato.Nev, ConsoleColor.Cyan);
+            Console.WriteLine();
+
+            Text.WriteLine("  Ügyfélszolgálat:    ", ConsoleColor.Gray);
+            Text.Write("    Cím:    ", ConsoleColor.Gray);
+            Text.WriteLine(szolgaltato.UgyfelSzolgalat, ConsoleColor.White);
+            Text.Write("    Telefon:   Nincs", ConsoleColor.Gray);
+            Console.WriteLine();
+            Text.WriteLine("-----------------------------------", ConsoleColor.DarkGray);
         }
 
         static public void ShowSzolgaltatoList(List<Szolgaltato> szolgaltatoList)

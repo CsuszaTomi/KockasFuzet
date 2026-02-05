@@ -15,8 +15,17 @@ namespace KockasFuzet.Views
 
         public void ShowSzolgaltatas(Szolgaltatas szolgaltatas)
         {
-            Console.WriteLine($"Azonosító: {szolgaltatas.Azon}");
-            Console.WriteLine($"Név: {szolgaltatas.Nev}");
+            Console.WriteLine();
+            Text.Write("  #", ConsoleColor.DarkYellow);
+            Text.Write(szolgaltatas.Azon.ToString(), ConsoleColor.Yellow);
+            Text.WriteLine(" SZOLGÁLTATÁS RÉSZLETEI", ConsoleColor.White);
+            Text.WriteLine("-----------------------------------", ConsoleColor.DarkGray);
+            Text.Write("  Név:      ", ConsoleColor.Gray);
+            Text.Write(szolgaltatas.Nev, ConsoleColor.Cyan);
+            Console.WriteLine();
+            Text.WriteLine("-----------------------------------", ConsoleColor.DarkGray);
+            Console.WriteLine();
+
         }
 
         static public void ShowSzolgaltatasList(List<Szolgaltatas> szolgaltatasList)
