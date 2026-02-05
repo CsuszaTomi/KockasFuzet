@@ -134,10 +134,16 @@ namespace KockasFuzet
                                 Console.ReadLine();
                                 break;
                             case 2:
+                                Console.Clear();
+                                SzamlaController.AddSzamla();
                                 break;
                             case 3:
+                                Console.Clear();
+                                SzamlaController.ModifySzamla(szamlak);
                                 break;
                             case 4:
+                                Console.Clear();
+                                SzamlaController.RemoveSzamla(szamlak);
                                 break;
                             case 5:
                                 break;

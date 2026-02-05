@@ -57,6 +57,17 @@ namespace KockasFuzet.Controller
             string rovidnev = Console.ReadLine();
             if (rovidnev == "")
                 return;
+            else
+            {
+                while(Checker.LenghtChecker(rovidnev,0,8))
+                {
+                    Text.WriteLine("A rövid név maximum 8 karakter lehet!", ConsoleColor.DarkRed);
+                    Console.Write("Rövid név: ");
+                    rovidnev = Console.ReadLine();
+                    if (rovidnev == "")
+                        return;
+                }
+            }
             Console.Write("Név: ");
             string nev = Console.ReadLine();
             if (nev == "")
@@ -153,11 +164,22 @@ namespace KockasFuzet.Controller
             if (modosit)
             {
                 Text.WriteLine("Ha valamit nem akar módosítani nyomjon entert!", ConsoleColor.Yellow);
-                Console.WriteLine($"Rövid név({modositando.RovidNev}): ");
+                Text.WriteWithInfo("Rövid név", modositando.RovidNev, ": ", ConsoleColor.White, ConsoleColor.Cyan);
                 string ujrovidnev = Console.ReadLine();
-                Console.Write($"Név ({modositando.Nev}): ");
+                if (ujrovidnev != "")
+                { 
+                    while (Checker.LenghtChecker(ujrovidnev, 0, 8))
+                    {
+                        Text.WriteLine("A rövid név maximum 8 karakter lehet!", ConsoleColor.DarkRed);
+                        Console.Write("Rövid név: ");
+                        rovidnev = Console.ReadLine();
+                        if (rovidnev == "")
+                            return;
+                    }
+                }
+                Text.WriteWithInfo("Név", modositando.Nev, ": ", ConsoleColor.White, ConsoleColor.Cyan);
                 string ujnev = Console.ReadLine();
-                Console.Write($"Ügyfélszolgálat címe ({modositando.UgyfelSzolgalat}): ");
+                Text.WriteWithInfo("Ügyfélszolgálat címe", modositando.UgyfelSzolgalat, ": ", ConsoleColor.White, ConsoleColor.Cyan);
                 string ujugyfelszolgalat = Console.ReadLine();
                 MySqlConnection connection = new MySqlConnection();
                 string connectionString = "SERVER = localhost;DATABASE=kockasfuzet;UID=root;PASSWORD=;";

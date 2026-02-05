@@ -16,10 +16,10 @@ namespace KockasFuzet.Models
         DateTime ig = DateTime.MinValue;
         int osszeg = 0;
         DateTime hatarido = DateTime.MinValue;
-        DateTime befizetve = DateTime.MinValue;
+        string befizetve = "";
         string megjegyzes = "";
 
-        public Szamla(int iD, int szolgaltatasAzon, string szolgaltatoRovidNev, DateTime tol, DateTime ig, int osszeg, DateTime hatarido, DateTime befizetve, string megjegyzes)
+        public Szamla(int iD, int szolgaltatasAzon, string szolgaltatoRovidNev, DateTime tol, DateTime ig, int osszeg, DateTime hatarido, string befizetve, string megjegyzes)
         {
             ID = iD;
             SzolgaltatasAzon = szolgaltatasAzon;
@@ -43,7 +43,7 @@ namespace KockasFuzet.Models
         public DateTime Ig { get => ig; set => ig = value; }
         public int Osszeg { get => osszeg; set => osszeg = value; }
         public DateTime Hatarido { get => hatarido; set => hatarido = value; }
-        public DateTime Befizetve { get => befizetve; set => befizetve = value; }
+        public string Befizetve { get => befizetve; set => befizetve = value; }
         public string Megjegyzes { get => megjegyzes; set => megjegyzes = value; }
     }
 }

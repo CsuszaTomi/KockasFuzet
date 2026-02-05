@@ -55,6 +55,25 @@ namespace KockasFuzet.Controller
             string azonosito = Console.ReadLine();
             if (azonosito == "")
                 return;
+            else
+            {
+                while(Checker.IntChecker(azonosito))
+                {
+                    Console.WriteLine("Az azonosító csak szám lehet!");
+                    Console.Write("Azonosító: ");
+                    azonosito = Console.ReadLine();
+                    if (azonosito == "")
+                        return;
+                }
+                while(Checker.LenghtChecker(azonosito, 0, 11))
+                {
+                    Console.WriteLine("Az azonosító maximum 11 karakter lehet!");
+                    Console.Write("Azonosító: ");
+                    azonosito = Console.ReadLine();
+                    if (azonosito == "")
+                        return;
+                }
+            }
             Console.Write("Név: ");
             string nev = Console.ReadLine();
             if (nev == "")
@@ -146,9 +165,28 @@ namespace KockasFuzet.Controller
             if (modosit)
             {
                 Text.WriteLine("Ha valamit nem akar módosítani nyomjon entert!", ConsoleColor.Yellow);
-                Console.WriteLine($"Azonosító({modositando.Azon}): ");
+                Text.WriteWithInfo("Azonosító", modositando.Azon.ToString(), ": ", ConsoleColor.White, ConsoleColor.Cyan);
                 string ujazon = Console.ReadLine();
-                Console.Write($"Név ({modositando.Nev}): ");
+                if(ujazon != "")
+                {
+                    while (Checker.IntChecker(ujazon))
+                    {
+                        Console.WriteLine("Az azonosító csak szám lehet!");
+                        Console.Write("Azonosító: ");
+                        ujazon = Console.ReadLine();
+                        if (ujazon == "")
+                            return;
+                    }
+                    while (Checker.LenghtChecker(ujazon, 0, 11))
+                    {
+                        Console.WriteLine("Az azonosító maximum 11 karakter lehet!");
+                        Console.Write("Azonosító: ");
+                        ujazon = Console.ReadLine();
+                        if (ujazon == "")
+                            return;
+                    }
+                }
+                Text.WriteWithInfo("Név", modositando.Nev, ": ", ConsoleColor.White, ConsoleColor.Cyan);
                 string ujnev = Console.ReadLine();
                 MySqlConnection connection = new MySqlConnection();
                 string connectionString = "SERVER = localhost;DATABASE=kockasfuzet;UID=root;PASSWORD=;";

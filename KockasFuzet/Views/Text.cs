@@ -55,6 +55,22 @@ namespace KockasFuzet.Views
             return mostanipont;
         }
 
+        public static void Write(string text, ConsoleColor color)
+        {
+            Console.ForegroundColor = color;
+            Console.Write(text);
+            Console.ForegroundColor = ConsoleColor.White;
+        }
+
+        public static void WriteWithInfo(string torzs,string info,string utotag, ConsoleColor torzscolor = ConsoleColor.White,ConsoleColor infocolor = ConsoleColor.White)
+        {
+            Console.ForegroundColor = torzscolor;
+            Console.Write($"{torzs}(");
+            Console.ForegroundColor = infocolor;
+            Console.Write($"{info}");
+            Console.ResetColor();
+            Console.Write($"){utotag} ");
+        }
         public static void WriteLine(string text, ConsoleColor color)
         {
             Console.ForegroundColor = color;

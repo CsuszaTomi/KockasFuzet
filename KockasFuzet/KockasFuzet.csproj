@@ -92,6 +92,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controller\Checker.cs" />
     <Compile Include="Controller\SzamlaController.cs" />
     <Compile Include="Controller\SzolgaltatasController.cs" />
     <Compile Include="Controller\SzolgaltatoController.cs" />
