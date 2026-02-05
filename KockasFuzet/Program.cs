@@ -13,7 +13,7 @@ namespace KockasFuzet
     {
         static void Main(string[] args)
         {
-            string[] menupoints = { "Szolgáltató kezelés", "Szolgáltatás kezelés","Számla kezelés", "Kilépés" };
+            string[] menupoints = { "Szolgáltató kezelés", "Szolgáltatás kezelés","Számla kezelés","Adatnormalizálás","Kilépés" };
 
             while (true)
             {
@@ -25,6 +25,7 @@ namespace KockasFuzet
                 {
                     case 0:
                         Console.Clear();
+                        szolgaltatok = SzolgaltatoController.GetSzolgaltatoList();
                         int szolgaltatochoice = Text.ArrowMenu("Szolgáltató kezelés", new string[] { "Szolgáltatók listázása","Szolgáltató kiirása", "Szolgáltató hozzáadása", "Szolgáltató módosítása", "Szolgáltató törlése", "Vissza" });
                         switch(szolgaltatochoice)
                         {
@@ -66,6 +67,7 @@ namespace KockasFuzet
                         }
                         break;
                     case 1:
+                        szolgaltatasok = SzolgaltatasController.GetSzolgaltatasList();
                         Console.Clear();
                         int szolgaltataschoice = Text.ArrowMenu("Szolgáltatás kezelés", new string[] { "Szolgáltatások listázása", "Szolgáltatás kiirása", "Szolgáltatás hozzáadása", "Szolgáltatás módosítása", "Szolgáltatás törlése", "Vissza" });
                         switch (szolgaltataschoice)
@@ -93,7 +95,7 @@ namespace KockasFuzet
                                 break;
                             case 2:
                                 Console.Clear();
-                                SzolgaltatasController.AddSzolgaltatas();
+                                SzolgaltatasController.AddSzolgaltatas(szolgaltatasok);
                                 break;
                             case 3:
                                 Console.Clear();
@@ -108,6 +110,7 @@ namespace KockasFuzet
                         }
                         break;
                     case 2:
+                        szamlak = SzamlaController.GetSzamlaList();
                         Console.Clear();
                         int szamlachoice = Text.ArrowMenu("Számla kezelés", new string[] { "Számlák listázása", "Számla kiirása", "Számla hozzáadása", "Számla módosítása", "Számla törlése", "Vissza" });
                         switch (szamlachoice)
@@ -147,21 +150,28 @@ namespace KockasFuzet
                                 break;
                             case 2:
                                 Console.Clear();
-                                SzamlaController.AddSzamla();
+                                SzamlaController.AddSzamla(szamlak);
+                                SzamlaController.SzamlaIdUpdater(szamlak);
                                 break;
                             case 3:
                                 Console.Clear();
                                 SzamlaController.ModifySzamla(szamlak);
+                                SzamlaController.SzamlaIdUpdater(szamlak);
                                 break;
                             case 4:
                                 Console.Clear();
                                 SzamlaController.RemoveSzamla(szamlak);
+                                SzamlaController.SzamlaIdUpdater(szamlak);
                                 break;
                             case 5:
                                 break;
                         }
                         break;
                     case 3:
+                        szamlak = SzamlaController.SzamlaIdUpdater(szamlak);
+                        szolgaltatasok = SzolgaltatasController.SzolgaltatasAzonUpdater(szolgaltatasok);
+                        break;
+                    case 4:
                         Environment.Exit(0);
                         break;
                 }

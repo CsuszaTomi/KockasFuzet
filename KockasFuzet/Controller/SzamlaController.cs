@@ -56,6 +56,45 @@ namespace KockasFuzet.Controller
             return szamlaList;
         }
 
+        /// <summary>
+        /// Ez a függvény elrendezi a számlák idjét hogy ne legyen üres id(pl ne legyen 1,2,3,5,6 hanem 1,2,3,4,5) és visszaadja a rendezett listát
+        /// </summary>
+        /// <param name="szamlak">A számlákat tartalmazó lista</param>
+        /// <returns>Az rendezett számlák listáját</returns>
+        public static List<Szamla> SzamlaIDNormalizer(List<Szamla> szamlak)
+        {
+            List<Szamla> rendezettSzamlak = szamlak.OrderBy(szamla => szamla.ID).ToList();
+            for (int i = 0; i < rendezettSzamlak.Count; i++)
+            {
+                rendezettSzamlak[i].ID = i + 1;
+            }
+            return rendezettSzamlak;
+        }
+
+        /// <summary>
+        /// A függvény frissíti a számlák id-jét az adatbázisban a rendezett lista alapján, hogy ne legyen üres id(pl ne legyen 1,2,3,5,6 hanem 1,2,3,4,5) és visszaadja a rendezett listát
+        /// </summary>
+        /// <param name="szamlak">A számlák listája</param>
+        /// <returns>A rendezett számlák listája</returns>
+        public static List<Szamla> SzamlaIdUpdater(List<Szamla> szamlak)
+        {
+            MySqlConnection connection = new MySqlConnection();
+            string connectionString = "SERVER = localhost;DATABASE=kockasfuzet;UID=root;PASSWORD=;";
+            connection.ConnectionString = connectionString;
+            connection.Open();
+            List<Szamla> regiszamlak = GetSzamlaList();
+            List<Szamla> rendezettszamla = SzamlaIDNormalizer(szamlak);
+            for (int i = 0; i < regiszamlak.Count; i++)
+            {
+                string sql = "UPDATE `számla` SET `ID`=@ujID WHERE ID = @ID";
+                MySqlCommand command = new MySqlCommand(sql, connection);
+                command.Parameters.AddWithValue("@ujID", rendezettszamla[i].ID);
+                command.Parameters.AddWithValue("@ID", regiszamlak[i].ID);
+                command.ExecuteNonQuery();
+            }
+            return rendezettszamla;
+        }
+
         static public Szamla GetSzamlaOBJ(int ID, List<Szamla> szamlak)
         {
             foreach (Szamla szamla in szamlak)
@@ -68,7 +107,7 @@ namespace KockasFuzet.Controller
             return null;
         }
 
-        static public void AddSzamla()
+        static public void AddSzamla(List<Szamla> szamlak)
         {
             Console.Clear();
             Text.WriteLine("Új számla hozzáadása", ConsoleColor.Red);
@@ -81,6 +120,37 @@ namespace KockasFuzet.Controller
             string id = Console.ReadLine();
             if (id == "")
                 return;
+            else
+            {
+                bool idMegfelelo = false;
+
+                while (!idMegfelelo)
+                {
+                    if (!Checker.IntChecker(id))
+                    {
+                        Text.WriteLine("Az ID csak szám lehet!", ConsoleColor.DarkRed);
+                    }
+                    else if (int.Parse(id) > szamlak.Count + 1)
+                    {
+                        Text.WriteLine($"Az ID nem lehet nagyobb, mint {szamlak.Count + 1}!", ConsoleColor.DarkRed);
+                    }
+                    else if (szamlak.Any(szamla => szamla.ID == int.Parse(id)))
+                    {
+                        Text.WriteLine("Már van ilyen azonosítójú számla!", ConsoleColor.DarkRed);
+                    }
+                    else
+                    {
+                        idMegfelelo = true;
+                        continue;
+                    }
+
+                    Console.Write("ID: ");
+                    id = Console.ReadLine();
+                    if (id == "") 
+                        return;
+                }
+
+            }
             Text.WriteLine("Választható szolgáltatások: ", ConsoleColor.Cyan);
             string tipusSql = "SELECT Azon, Nev FROM szolgaltatas";
             List<string> szolgaltatasazonosito = new List<string>();

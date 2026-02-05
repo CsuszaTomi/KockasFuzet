@@ -46,7 +46,46 @@ namespace KockasFuzet.Controller
             return null;
         }
 
-        static public void AddSzolgaltatas()
+        /// <summary>
+        /// Ez a függvény elrendezi a szolgáltatások azonosítóját hogy ne legyen üres id(pl ne legyen 1,2,3,5,6 hanem 1,2,3,4,5) és visszaadja a rendezett listát
+        /// </summary>
+        /// <param name="szolgaltatasok">A szolgáltatásokat tartalmazó lista</param>
+        /// <returns>Az rendezett szolgáltatások listáját</returns>
+        public static List<Szolgaltatas> SzolgaltatasAzonNormalizer(List<Szolgaltatas> szolgaltatasok)
+        {
+            List<Szolgaltatas> rendezettAzonok = szolgaltatasok.OrderBy(szamla => szamla.Azon).ToList();
+            for (int i = 0; i < rendezettAzonok.Count; i++)
+            {
+                rendezettAzonok[i].Azon = i + 1;
+            }
+            return rendezettAzonok;
+        }
+
+        /// <summary>
+        /// A függvény frissíti a szolgáltatások azon-ját az adatbázisban a rendezett lista alapján, hogy ne legyen üres id(pl ne legyen 1,2,3,5,6 hanem 1,2,3,4,5) és visszaadja a rendezett listát
+        /// </summary>
+        /// <param name="szolgaltatasok">A szolgáltatásokat listája</param>
+        /// <returns>A rendezett szolgáltatások listája</returns>
+        public static List<Szolgaltatas> SzolgaltatasAzonUpdater(List<Szolgaltatas> szolgaltatasok)
+        {
+            MySqlConnection connection = new MySqlConnection();
+            string connectionString = "SERVER = localhost;DATABASE=kockasfuzet;UID=root;PASSWORD=;";
+            connection.ConnectionString = connectionString;
+            connection.Open();
+            List<Szolgaltatas> regiszolgaltatok = GetSzolgaltatasList();
+            List<Szolgaltatas> rendezettszamla = SzolgaltatasAzonNormalizer(szolgaltatasok);
+            for (int i = 0; i < regiszolgaltatok.Count; i++)
+            {
+                string sql = "UPDATE `szolgaltatas` SET `Azon`=@ujAzon WHERE Azon = @Azon";
+                MySqlCommand command = new MySqlCommand(sql, connection);
+                command.Parameters.AddWithValue("@ujAzon", rendezettszamla[i].Azon);
+                command.Parameters.AddWithValue("@Azon", regiszolgaltatok[i].Azon);
+                command.ExecuteNonQuery();
+            }
+            return rendezettszamla;
+        }
+
+        static public void AddSzolgaltatas(List<Szolgaltatas> szolgaltatasok)
         {
             Console.Clear();
             Text.WriteLine("Új szolgáltatás hozzáadása", ConsoleColor.Red);
@@ -57,17 +96,28 @@ namespace KockasFuzet.Controller
                 return;
             else
             {
-                while(Checker.IntChecker(azonosito))
+                bool azonMegfelelo = false;
+
+                while (!azonMegfelelo)
                 {
-                    Console.WriteLine("Az azonosító csak szám lehet!");
-                    Console.Write("Azonosító: ");
-                    azonosito = Console.ReadLine();
-                    if (azonosito == "")
-                        return;
-                }
-                while(Checker.LenghtChecker(azonosito, 0, 11))
-                {
-                    Console.WriteLine("Az azonosító maximum 11 karakter lehet!");
+                    if (!Checker.IntChecker(azonosito))
+                    {
+                        Text.WriteLine("Az ID csak szám lehet!", ConsoleColor.DarkRed);
+                    }
+                    else if (int.Parse(azonosito) > szolgaltatasok.Count + 1)
+                    {
+                        Text.WriteLine($"Az ID nem lehet nagyobb, mint {szolgaltatasok.Count + 1}!", ConsoleColor.DarkRed);
+                    }
+                    else if (szolgaltatasok.Any(azon => azon.Azon == int.Parse(azonosito)))
+                    {
+                        Text.WriteLine("Már van ilyen azonosítójú szolgáltatás!", ConsoleColor.DarkRed);
+                    }
+                    else
+                    {
+                        azonMegfelelo = true;
+                        continue;
+                    }
+
                     Console.Write("Azonosító: ");
                     azonosito = Console.ReadLine();
                     if (azonosito == "")
