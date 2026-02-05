@@ -168,12 +168,12 @@ namespace KockasFuzet.Controller
                 string ujrovidnev = Console.ReadLine();
                 if (ujrovidnev != "")
                 { 
-                    while (Checker.LenghtChecker(ujrovidnev, 0, 8))
+                    while (!Checker.LenghtChecker(ujrovidnev, 0, 8))
                     {
                         Text.WriteLine("A rövid név maximum 8 karakter lehet!", ConsoleColor.DarkRed);
                         Console.Write("Rövid név: ");
-                        rovidnev = Console.ReadLine();
-                        if (rovidnev == "")
+                        ujrovidnev = Console.ReadLine();
+                        if (ujrovidnev == "")
                             return;
                     }
                 }

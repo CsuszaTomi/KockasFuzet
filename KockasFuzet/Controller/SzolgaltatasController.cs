@@ -227,14 +227,14 @@ namespace KockasFuzet.Controller
                         if (ujazon == "")
                             return;
                     }
-                    while (Checker.LenghtChecker(ujazon, 0, 11))
-                    {
-                        Console.WriteLine("Az azonosító maximum 11 karakter lehet!");
-                        Console.Write("Azonosító: ");
-                        ujazon = Console.ReadLine();
-                        if (ujazon == "")
-                            return;
-                    }
+                }
+                while (!Checker.LenghtChecker(ujazon, 0, 11))
+                {
+                    Console.WriteLine("Az azonosító maximum 11 karakter lehet!");
+                    Console.Write("Azonosító: ");
+                    ujazon = Console.ReadLine();
+                    if (ujazon == "")
+                        return;
                 }
                 Text.WriteWithInfo("Név", modositando.Nev, ": ", ConsoleColor.White, ConsoleColor.Cyan);
                 string ujnev = Console.ReadLine();
