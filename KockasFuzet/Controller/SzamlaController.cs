@@ -12,6 +12,10 @@ namespace KockasFuzet.Controller
 {
     internal class SzamlaController
     {
+        /// <summary>
+        /// Ez a függvény lekéri az összes számlát az adatbázisból és visszaadja egy listában, ha nincs egy számla sem akkor egy üres listát ad vissza
+        /// </summary>
+        /// <returns>A számlák listát</returns>
         static public List<Szamla> GetSzamlaList()
         {
             List<Szamla> szamlaList = new List<Szamla>();
@@ -95,6 +99,12 @@ namespace KockasFuzet.Controller
             return rendezettszamla;
         }
 
+        /// <summary>
+        /// Ez a függvény visszaadja a számla objektumot az id alapján, ha nincs ilyen id-jű számla akkor null-t ad vissza
+        /// </summary>
+        /// <param name="ID">A keresendő id</param>
+        /// <param name="szamlak">a számlák listája</param>
+        /// <returns>A keresett számlát</returns>
         static public Szamla GetSzamlaOBJ(int ID, List<Szamla> szamlak)
         {
             foreach (Szamla szamla in szamlak)
@@ -107,6 +117,10 @@ namespace KockasFuzet.Controller
             return null;
         }
 
+        /// <summary>
+        /// Ez a függvény hozzáad egy új számlát az adatbázishoz és a listához is.
+        /// </summary>
+        /// <param name="szamlak">A számlák lista</param>
         static public void AddSzamla(List<Szamla> szamlak)
         {
             Console.Clear();
@@ -295,6 +309,10 @@ namespace KockasFuzet.Controller
             Console.ReadLine();
         }
 
+        /// <summary>
+        /// Ez a függvény töröl egy számlát az adatbázisból és a listából is az id alapján, ha nincs ilyen id-jű számla akkor kiírja hogy nincs ilyen számla
+        /// </summary>
+        /// <param name="szamlak">A számlák lista</param>
         static public void RemoveSzamla(List<Szamla> szamlak)
         {
             Console.Clear();
@@ -334,6 +352,10 @@ namespace KockasFuzet.Controller
             Console.ReadLine();
         }
 
+        /// <summary>
+        /// Ez a függvény módosít egy számlát az adatbázisban és a listában is az id alapján, ha nincs ilyen id-jű számla akkor kiírja hogy nincs ilyen számla
+        /// </summary>
+        /// <param name="szamlak">A számlák lista</param>
         static public void ModifySzamla(List<Szamla> szamlak)
         {
             Console.Clear();
