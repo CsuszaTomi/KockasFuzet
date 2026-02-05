@@ -88,7 +88,7 @@ namespace KockasFuzet.Controller
             connection.Open();
             List<Szamla> regiszamlak = GetSzamlaList();
             List<Szamla> rendezettszamla = SzamlaIDNormalizer(szamlak);
-            for (int i = 0; i < regiszamlak.Count; i++)
+            for (int i = 0; i < szamlak.Count; i++)
             {
                 string sql = "UPDATE `számla` SET `ID`=@ujID WHERE ID = @ID";
                 MySqlCommand command = new MySqlCommand(sql, connection);

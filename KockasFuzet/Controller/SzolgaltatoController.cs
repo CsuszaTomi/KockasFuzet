@@ -59,7 +59,7 @@ namespace KockasFuzet.Controller
                 return;
             else
             {
-                while(Checker.LenghtChecker(rovidnev,0,8))
+                while(!Checker.LenghtChecker(rovidnev,0,9))
                 {
                     Text.WriteLine("A rövid név maximum 8 karakter lehet!", ConsoleColor.DarkRed);
                     Console.Write("Rövid név: ");

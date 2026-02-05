@@ -151,17 +151,14 @@ namespace KockasFuzet
                             case 2:
                                 Console.Clear();
                                 SzamlaController.AddSzamla(szamlak);
-                                SzamlaController.SzamlaIdUpdater(szamlak);
                                 break;
                             case 3:
                                 Console.Clear();
                                 SzamlaController.ModifySzamla(szamlak);
-                                SzamlaController.SzamlaIdUpdater(szamlak);
                                 break;
                             case 4:
                                 Console.Clear();
                                 SzamlaController.RemoveSzamla(szamlak);
-                                SzamlaController.SzamlaIdUpdater(szamlak);
                                 break;
                             case 5:
                                 break;
