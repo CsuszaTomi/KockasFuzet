@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Gép: 127.0.0.1
--- Létrehozás ideje: 2026. Jan 29. 13:11
+-- Létrehozás ideje: 2026. Feb 12. 07:25
 -- Kiszolgáló verziója: 10.4.32-MariaDB
 -- PHP verzió: 8.2.12
 
@@ -29,7 +29,6 @@ USE `kockasfuzet`;
 -- Tábla szerkezet ehhez a táblához `szolgaltatas`
 --
 
-DROP TABLE IF EXISTS `szolgaltatas`;
 CREATE TABLE `szolgaltatas` (
   `Azon` int(11) NOT NULL,
   `Nev` varchar(32) NOT NULL
@@ -44,7 +43,8 @@ INSERT INTO `szolgaltatas` (`Azon`, `Nev`) VALUES
 (2, 'Földgáz'),
 (3, 'Vezetékes Telefon'),
 (4, 'Mobil'),
-(5, 'Víz');
+(5, 'Víz'),
+(6, 'Élelmiszer');
 
 -- --------------------------------------------------------
 
@@ -52,7 +52,6 @@ INSERT INTO `szolgaltatas` (`Azon`, `Nev`) VALUES
 -- Tábla szerkezet ehhez a táblához `szolgaltato`
 --
 
-DROP TABLE IF EXISTS `szolgaltato`;
 CREATE TABLE `szolgaltato` (
   `RovidNev` varchar(8) NOT NULL,
   `Nev` varchar(256) NOT NULL,
@@ -64,11 +63,13 @@ CREATE TABLE `szolgaltato` (
 --
 
 INSERT INTO `szolgaltato` (`RovidNev`, `Nev`, `UgyfelSzolgalat`) VALUES
-('Bilibali', 'Bilibali Olajvállalat', '5151252'),
+('Bilibali', 'Bilibali Nemzetkezözi Olajfejtő Zrt.', '3556 Miskolc, Foltos u. 14.'),
 ('ÉRV', 'Északmagyarországi Regionális Vízművek Zrt.', '3530 Miskolc, Corvin u. 2.'),
+('JánosGK', 'János Kenyér Gyár', '3533 Miskolc,Kenyérgyártó u. 3.'),
 ('MiVíz', 'MIVÍZ Kft.', '3530 Miskolc, Corvin u. 2.'),
 ('MVM Next', 'MVM Next Energiakereskedelmi Zrt', '3530 Miskolc, Arany János utca 6-8.'),
-('Telecom', 'Magyar Telekom Nyrt.', '3525 Miskolc, Szentpáli utca 2 - 6.');
+('Telecom', 'Magyar Telekom Nyrt.', '3525 Miskolc, Szentpáli utca 2 - 6.'),
+('Yettel', 'Yettel Magyarország Zrt.', '3527 Miskolc, Széchenyi István út 111.');
 
 -- --------------------------------------------------------
 
@@ -76,7 +77,6 @@ INSERT INTO `szolgaltato` (`RovidNev`, `Nev`, `UgyfelSzolgalat`) VALUES
 -- Tábla szerkezet ehhez a táblához `számla`
 --
 
-DROP TABLE IF EXISTS `számla`;
 CREATE TABLE `számla` (
   `ID` int(11) NOT NULL,
   `SzolgaltatasAzon` int(11) NOT NULL,
@@ -94,7 +94,12 @@ CREATE TABLE `számla` (
 --
 
 INSERT INTO `számla` (`ID`, `SzolgaltatasAzon`, `SzolgaltatoRovid`, `Tol`, `Ig`, `Osszeg`, `Hatarido`, `Befizetve`, `Megjegyzes`) VALUES
-(1, 1, 'MVM Next', '2025-11-01', '2025-11-30', 9525, '2025-12-14', '2025-12-05', 'postán');
+(1, 4, 'Telecom', '2025-11-01', '2025-11-30', 9525, '2025-12-14', '2025-12-05', 'postán'),
+(2, 4, 'Bilibali', '2016-01-02', '2016-02-02', 32450, '2016-02-10', '0000-00-00', 'postán'),
+(3, 5, 'ÉRV', '2016-04-01', '2016-05-01', 25140, '2016-05-10', '0000-00-00', ''),
+(4, 5, 'MiVíz', '2001-11-22', '2001-12-22', 15250, '2002-01-10', '2002-01-05', ''),
+(5, 6, 'JánosGK', '2026-01-16', '2026-02-16', 141000, '2026-03-01', '0000-00-00', 'Janinál'),
+(6, 3, 'Yettel', '2025-12-13', '2026-01-14', 11250, '2026-01-20', '2026-01-17', '');
 
 --
 -- Indexek a kiírt táblákhoz
@@ -128,13 +133,13 @@ ALTER TABLE `számla`
 -- AUTO_INCREMENT a táblához `szolgaltatas`
 --
 ALTER TABLE `szolgaltatas`
-  MODIFY `Azon` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `Azon` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=117;
 
 --
 -- AUTO_INCREMENT a táblához `számla`
 --
 ALTER TABLE `számla`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- Megkötések a kiírt táblákhoz
